@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@model TaskManagementSystem.Models.Comment
+
+@{
+    ViewBag.Title = "Add Comment";
+}
+
+<style>
+
+    .comment-wrapper {
+        max-width: 800px;
+        margin: 30px auto;
+    }
+
+    .comment-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+        overflow: hidden;
+    }
+
+    .comment-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 25px;
+    }
+
+        .comment-header h3 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+    .comment-body {
+        padding: 30px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        min-height: 45px;
+    }
+
+    textarea.form-control {
+        min-height: 130px;
+        resize: vertical;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border: none;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 8px;
+    }
+
+        .btn-save:hover {
+            color: white;
+            opacity: 0.9;
+        }
+
+    .btn-back {
+        margin-left: 8px;
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+</style>
+
+
+<div class="comment-wrapper">
+
+    <div class="comment-card">
+
+        <div class="comment-header">
+
+            <h3>Add Comment</h3>
+
+            <p style="margin:5px 0 0;">
+                Task: @ViewBag.TaskTitle
+            </p>
+
+        </div>
+
+
+        <div class="comment-body">
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Message
+                </div>
+            }
+
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+
+            @using (Html.BeginForm("Create", "Comment", FormMethod.Post))
+            {
+                @Html.HiddenFor(x => x.TaskId)
+
+                <div class="form-group">
+
+                    <label>Comment</label>
+
+                    @Html.TextAreaFor(
+                        x => x.CommentText,
+                        new
+                        {
+                            @class = "form-control",
+                            placeholder = "Write your comment here..."
+                        }
+                    )
+
+                </div>
+
+                <br />
+
+                <button type="submit" class="btn btn-save">
+                    Add Comment
+                </button>
+
+                <a href="@Url.Action("Index", "Comment")"
+                   class="btn btn-secondary btn-back">
+                    Back
+                </a>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+

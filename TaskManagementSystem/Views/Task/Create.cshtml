@@ -1,0 +1,348 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@model TaskManagementSystem.Models.TaskItem
+
+@{
+    ViewBag.Title = Model.Id == 0 ? "Create Task" : "Edit Task";
+}
+
+<style>
+
+    .task-form-wrapper {
+        padding: 35px 0;
+    }
+
+    .form-card {
+        max-width: 800px;
+        margin: auto;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+        overflow: hidden;
+    }
+
+    .form-header {
+        padding: 22px 28px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+    }
+
+        .form-header h3 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .form-header p {
+            margin: 5px 0 0;
+            opacity: .9;
+            font-size: 14px;
+        }
+
+    .form-body {
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 7px;
+        display: block;
+    }
+
+    .form-control {
+        height: 45px;
+        border-radius: 8px;
+        border: 1px solid #dce3ec;
+        padding: 10px 13px;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    textarea.form-control {
+        height: 100px;
+        resize: vertical;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 2px rgba(102,126,234,0.15);
+    }
+
+    .required-star {
+        color: red;
+    }
+
+    .button-area {
+        margin-top: 10px;
+        padding-top: 20px;
+        border-top: 1px solid #edf2f7;
+    }
+
+    .save-btn {
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .back-btn {
+        padding: 10px 22px;
+        border-radius: 8px;
+        margin-left: 8px;
+    }
+
+    .text-danger {
+        font-size: 13px;
+    }
+</style>
+
+
+<div class="container task-form-wrapper">
+
+    <div class="form-card">
+
+        <div class="form-header">
+
+            <h3>
+                @(Model.Id == 0 ? "Create New Task" : "Edit Task")
+            </h3>
+
+            <p>
+                @(Model.Id == 0
+                    ? "Create a task and assign it to a team member"
+                    : "Update task information")
+            </p>
+
+        </div>
+
+
+        <div class="form-body">
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                    @ViewBag.Message
+                </div>
+            }
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.HiddenFor(x => x.Id)
+
+                <!-- Title -->
+                <div class="row">
+                    <div class="col-6">
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Task Title
+                                <span class="required-star">*</span>
+                            </label>
+
+                            @Html.TextBoxFor(
+                                x => x.Title,
+                                new
+                                {
+                                    @class = "form-control",
+                                    placeholder = "Enter task title"
+                                })
+
+                            @Html.ValidationMessageFor(
+                                x => x.Title,
+                                "",
+                                new { @class = "text-danger" })
+
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Description
+                            </label>
+
+                            @Html.TextAreaFor(
+                                x => x.Description,
+                                new
+                                {
+                                    @class = "form-control",
+                                    placeholder = "Enter task description"
+                                })
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <!-- Description -->
+               
+
+                <div class="row">
+
+                    <!-- Team -->
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Team
+                            </label>
+
+                            @Html.DropDownListFor(
+                                x => x.TeamId,
+                                new SelectList(
+                                    ViewBag.Teams,
+                                    "Id",
+                                    "Name"
+                                ),
+                                "Select Team",
+                                new { @class = "form-control" })
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- User -->
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Assign To
+                            </label>
+
+                            @Html.DropDownListFor(
+                                x => x.AssignedToUserId,
+                                new SelectList(
+                                    ViewBag.Users,
+                                    "Id",
+                                    "Name"
+                                ),
+                                "Select User",
+                                new { @class = "form-control" })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <!-- Status -->
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Status
+                            </label>
+
+                            @Html.DropDownListFor(
+                                x => x.Status,
+                                new SelectList(
+                                    new[]
+                                    {
+                                        "To Do",
+                                        "In Progress",
+                                        "Done"
+                                    }
+                                ),
+                                "Select Status",
+                                new { @class = "form-control" })
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Priority -->
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Priority
+                            </label>
+
+                            @Html.DropDownListFor(
+                                x => x.Priority,
+                                new SelectList(
+                                    new[]
+                                    {
+                                        "Low",
+                                        "Medium",
+                                        "High"
+                                    }
+                                ),
+                                "Select Priority",
+                                new { @class = "form-control" })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Deadline -->
+                <div class="form-group">
+
+                    <label class="form-label">
+                        Deadline
+                    </label>
+
+                    @Html.TextBoxFor(
+                        x => x.Deadline,
+                        "{0:yyyy-MM-dd}",
+                        new
+                        {
+                            @class = "form-control",
+                            type = "date"
+                        })
+
+                </div>
+
+
+                <div class="button-area">
+
+                    <button type="submit"
+                            class="btn btn-primary save-btn">
+
+                        @(Model.Id == 0
+                            ? "Save Task"
+                            : "Update Task")
+
+                    </button>
+
+                    <a href="@Url.Action("Index", "Task")"
+                       class="btn btn-secondary back-btn">
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>
+

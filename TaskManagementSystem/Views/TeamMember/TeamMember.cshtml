@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "CreateTeamMember";
+}
+
+
+
+@model IEnumerable<TaskManagementSystem.Models.TeamMember>
+
+@*@{
+    ViewBag.Title = "Team Members";
+}*@
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>Team Members</h2>
+
+        <a href="@Url.Action("CreateTeamMember", "TeamMember")"
+           class="btn btn-primary">
+            + Assign Member
+        </a>
+
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Team ID</th>
+                        <th>User ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            @*<td>@item.TeamId</td>
+        <td>@item.UserId</td>*@
+
+                            <td>
+                                @{
+                                    var team = ((IEnumerable<TaskManagementSystem.Models.Team>)ViewBag.Teams)
+                                        .FirstOrDefault(x => x.Id == item.TeamId);
+                                }
+
+                                @(team != null ? team.Name : "-")
+                            </td>
+
+                            <td>
+                                @{
+                                    var user = ((IEnumerable<TaskManagementSystem.Models.User>)ViewBag.Users)
+                                        .FirstOrDefault(x => x.Id == item.UserId);
+                                }
+
+                                @(user != null ? user.Name : "-")
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action(
+                                    "Delete",
+                                    "TeamMember",
+                                    new { id = item.Id })"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Remove this member?');">
+                                    Remove
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

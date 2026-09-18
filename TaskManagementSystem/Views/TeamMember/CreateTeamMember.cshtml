@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "CreateTeamMember";
+}
+
+@model TaskManagementSystem.Models.TeamMember
+
+@*@{
+    ViewBag.Title = "Assign Team Member";
+}*@
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4>Assign Team Member</h4>
+        </div>
+
+        <div class="card-body">
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Message
+                </div>
+            }
+
+            @using (Html.BeginForm("CreateTeamMember", "TeamMember", FormMethod.Post))
+            {
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group mb-3">
+
+                            <label> Team</label>
+
+                            @Html.DropDownListFor(
+                                x => x.TeamId,
+                                new SelectList(ViewBag.Teams, "Id", "Name"),
+                                "Select Team",
+                                new { @class = "form-control" }
+                            )
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-6">
+
+                        <div class="form-group mb-3">
+
+                            <label>User</label>
+
+                            @Html.DropDownListFor(
+                                x => x.UserId,
+                                new SelectList(ViewBag.Users, "Id", "Name"),
+                                "Select User",
+                                new { @class = "form-control" }
+                            )
+
+                        </div>
+
+                    </div>
+                </div>
+
+          
+
+                <button type="submit" class="btn btn-primary">
+                    Assign Member
+                </button>
+
+                <a href="@Url.Action("TeamMember", "TeamMember")"
+                   class="btn btn-secondary">
+                    Back
+                </a>
+
+
+
+
+
+
+            }
+
+        </div>
+
+    </div>
+
+</div>

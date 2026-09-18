@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title - Task Management System</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+        }
+
+        /* Navbar */
+        .custom-navbar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 12px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .navbar-brand-custom {
+            color: white !important;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-link-custom {
+            color: white !important;
+            font-size: 15px;
+            margin-left: 8px;
+            padding: 8px 14px !important;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+            .nav-link-custom:hover {
+                background: rgba(255,255,255,0.18);
+                color: white !important;
+            }
+
+        /* Main Content */
+        .main-content {
+            min-height: calc(100vh - 130px);
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        /* Footer */
+        .custom-footer {
+            background: white;
+            border-top: 1px solid #e5e5e5;
+            padding: 15px 0;
+            text-align: center;
+            color: #777;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white !important;
+            padding: 7px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+            .logout-btn:hover {
+                background: white;
+                color: #667eea !important;
+            }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-sm custom-navbar">
+        <div class="container">
+
+            <!-- Logo / Project Name -->
+            @Html.ActionLink(
+                "Task Management System",
+                "Index",
+                "Dashboard",
+                new { area = "" },
+                new { @class = "navbar-brand-custom" }
+            )
+
+            <button type="button"
+                    class="navbar-toggler"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse"
+                    title="Toggle navigation"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <div class="collapse navbar-collapse">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <!-- Dashboard -->
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "Dashboard",
+                            "Index",
+                            "Dashboard",
+                            new { area = "" },
+                            new { @class = "nav-link nav-link-custom" }
+                        )
+                    </li>
+
+                    <!-- Users -->
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                           "User",
+        "UserManagement",
+        "User",
+                            new { area = "" },
+                            new { @class = "nav-link nav-link-custom" }
+                        )
+                    </li>
+
+                    <!-- Teams -->
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "Teams",
+                            "Index",
+                            "Team",
+                            new { area = "" },
+                            new { @class = "nav-link nav-link-custom" }
+                        )
+                    </li>
+
+                    @Html.ActionLink(
+    "Team Members",
+    "TeamMember",
+    "TeamMember",
+    new { area = "" },
+    new { @class = "nav-link nav-link-custom" }
+)
+
+                    <!-- Tasks -->
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "Tasks",
+                            "Index",
+                            "Task",
+                            new { area = "" },
+                            new { @class = "nav-link nav-link-custom" }
+                        )
+                    </li>
+
+                    <!-- Comments -->
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "Comments",
+                            "Index",
+                            "Comment",
+                            new { area = "" },
+                            new { @class = "nav-link nav-link-custom" }
+                        )
+                    </li>
+
+                    <!-- Notifications -->
+                    <li class="nav-item">
+                        @Html.ActionLink(
+                            "Notifications",
+                            "Notification",
+                            "Notification",
+                            new { area = "" },
+                            new { @class = "nav-link nav-link-custom" }
+                        )
+                    </li>
+
+                    <!-- Logout -->
+                    <li class="nav-item mt-2">
+                        @Html.ActionLink(
+                            "Logout",
+                            "Logout",
+                            "Account",
+                            new { area = "" },
+                            new { @class = "logout-btn" }
+                        )
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="container main-content">
+
+        @RenderBody()
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer class="custom-footer">
+
+        <div class="container">
+
+            <span>
+                © @DateTime.Now.Year - Task Management System
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

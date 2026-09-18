@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@model IEnumerable<TaskManagementSystem.Models.TaskItem>
+
+@{
+    ViewBag.Title = "Task Management";
+}
+
+<style>
+
+    .task-wrapper {
+        padding: 30px 0;
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 5px;
+    }
+
+    .page-subtitle {
+        color: #718096;
+        margin-bottom: 25px;
+    }
+
+    .top-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .task-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        overflow-x: auto;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+        .table thead th {
+            border-top: none;
+            background: #f7f9fc;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 14px;
+        }
+
+        .table tbody td {
+            padding: 14px;
+            vertical-align: middle;
+        }
+
+    .task-title {
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    .action-btn {
+        margin-right: 5px;
+        border-radius: 6px;
+    }
+
+    .status-badge,
+    .priority-badge {
+        padding: 6px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+</style>
+
+
+<div class="container task-wrapper">
+
+    <div class="top-section">
+
+        <div>
+
+            <div class="page-title">
+                Task Management
+            </div>
+
+            <div class="page-subtitle">
+                Create, assign and manage tasks
+            </div>
+
+        </div>
+
+
+        <a href="@Url.Action("Create", "Task")"
+           class="btn btn-primary add-btn">
+
+            + Create Task
+
+        </a>
+
+    </div>
+
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong>
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+
+    <div class="task-card">
+
+        <table class="table table-hover">
+
+            <thead>
+
+                <tr>
+                    <th>#</th>
+                    <th>Task</th>
+                    <th>Team</th>
+                    <th>Assigned User</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Deadline</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.Id
+                            </td>
+
+                            <td class="task-title">
+                                @item.Title
+                            </td>
+
+                            @*<td>
+            @item.TeamId
+        </td>*@
+
+
+                            <td>
+                                @{
+                                    var team = ((IEnumerable<TaskManagementSystem.Models.Team>)ViewBag.Teams)
+                                        .FirstOrDefault(x => x.Id == item.TeamId);
+                                }
+
+                                @(team != null ? team.Name : "-")
+                            </td>
+
+                            @*<td>
+            @item.AssignedToUserId
+        </td>*@
+
+
+                            <td>
+                                @{
+                                    var user = ((IEnumerable<TaskManagementSystem.Models.User>)ViewBag.Users)
+                                        .FirstOrDefault(x => x.Id == item.AssignedToUserId);
+                                }
+
+                                @(user != null ? user.Name : "-")
+                            </td>
+
+
+
+                            <td>
+                                <span class="status-badge">
+                                    @item.Status
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="priority-badge">
+                                    @item.Priority
+                                </span>
+                            </td>
+
+                            <td>
+                                @(item.Deadline.HasValue
+                                    ? item.Deadline.Value.ToString("dd-MM-yyyy")
+                                    : "-")
+                            </td>
+
+                            <td>
+
+                                <a href="@Url.Action("Create","Comment",new { taskId = item.Id })"
+                                   class="btn btn-success btn-sm action-btn">
+                                    Comment
+                                </a>
+
+                                <a href="@Url.Action(
+                                    "Edit",
+                                    "Task",
+                                    new { id = item.Id })"
+                                   class="btn btn-info btn-sm action-btn">
+                                    Edit
+                                </a>
+
+                                <a href="@Url.Action(
+                                    "Delete",
+                                    "Task",
+                                    new { id = item.Id })"
+                                   class="btn btn-danger btn-sm action-btn"
+                                   onclick="return confirm('Are you sure you want to delete this task?');">
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">
+                            No tasks found.
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

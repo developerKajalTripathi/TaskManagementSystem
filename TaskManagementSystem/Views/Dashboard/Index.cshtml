@@ -1,0 +1,325 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+
+    .dashboard-wrapper {
+        padding: 25px 0;
+    }
+
+    .dashboard-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 5px;
+    }
+
+    .dashboard-subtitle {
+        color: #718096;
+        margin-bottom: 25px;
+    }
+
+    /* Summary Cards */
+
+    .dashboard-card {
+        border: none;
+        border-radius: 15px;
+        color: white;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .dashboard-card .card-body {
+            padding: 22px;
+            position: relative;
+            z-index: 2;
+        }
+
+    .card-title {
+        font-size: 15px;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .card-number {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .card-icon {
+        position: absolute;
+        right: 18px;
+        top: 18px;
+        font-size: 42px;
+        opacity: 0.20;
+    }
+
+    .total-card {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    .todo-card {
+        background: linear-gradient(135deg, #f6ad55, #ed8936);
+    }
+
+    .progress-card {
+        background: linear-gradient(135deg, #4299e1, #3182ce);
+    }
+
+    .done-card {
+        background: linear-gradient(135deg, #48bb78, #2f855a);
+    }
+
+    /* Welcome / Info Box */
+
+    .welcome-box {
+        background: white;
+        border-radius: 15px;
+        padding: 22px;
+        margin-top: 25px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+    }
+
+        .welcome-box h4 {
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .welcome-box p {
+            color: #718096;
+            margin-bottom: 0;
+        }
+
+    /* Quick Actions */
+
+    .quick-box {
+        background: white;
+        border-radius: 15px;
+        padding: 22px;
+        margin-top: 25px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+    }
+
+        .quick-box h4 {
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+    .quick-btn {
+        display: inline-block;
+        padding: 11px 20px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        background: #f7fafc;
+        color: #4a5568;
+        border: 1px solid #e2e8f0;
+        transition: 0.3s;
+    }
+
+        .quick-btn:hover {
+            background: #edf2f7;
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+
+    /* Responsive */
+
+    @@media (max-width: 768px) {
+        .dashboard-title {
+            font-size: 24px;
+        }
+
+        .card-number {
+            font-size: 28px;
+        }
+    }
+</style>
+
+
+<div class="container dashboard-wrapper">
+
+    <!-- Heading -->
+
+    <div class="mb-4">
+
+        <h2 class="dashboard-title">
+            Task Management Dashboard
+        </h2>
+
+        <p class="dashboard-subtitle">
+            Overview of your task management system
+        </p>
+
+    </div>
+
+
+    <!-- Dashboard Cards -->
+
+    <div class="row">
+
+        <!-- Total Tasks -->
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card dashboard-card total-card">
+
+                <div class="card-body">
+
+                    <div class="card-title">
+                        Total Tasks
+                    </div>
+
+                    <h2 class="card-number">
+                        @ViewBag.TotalTasks
+                    </h2>
+
+                    <div class="card-icon">
+                        📋
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- To Do -->
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card dashboard-card todo-card">
+
+                <div class="card-body">
+
+                    <div class="card-title">
+                        To Do
+                    </div>
+
+                    <h2 class="card-number">
+                        @ViewBag.ToDoTasks
+                    </h2>
+
+                    <div class="card-icon">
+                        📝
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- In Progress -->
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card dashboard-card progress-card">
+
+                <div class="card-body">
+
+                    <div class="card-title">
+                        In Progress
+                    </div>
+
+                    <h2 class="card-number">
+                        @ViewBag.InProgressTasks
+                    </h2>
+
+                    <div class="card-icon">
+                        🔄
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Done -->
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card dashboard-card done-card">
+
+                <div class="card-body">
+
+                    <div class="card-title">
+                        Completed Tasks
+                    </div>
+
+                    <h2 class="card-number">
+                        @ViewBag.DoneTasks
+                    </h2>
+
+                    <div class="card-icon">
+                        ✔
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Welcome Box -->
+
+    <div class="welcome-box">
+
+        <h4>
+            Welcome to Task Management System 👋
+        </h4>
+
+        <p>
+            Manage teams, assign tasks, track task progress
+            and collaborate with your team members from one place.
+        </p>
+
+    </div>
+
+
+    <!-- Quick Actions -->
+
+    <div class="quick-box">
+
+        <h4>
+            Quick Actions
+        </h4>
+
+        <a href="@Url.Action("Index", "Task")" class="quick-btn">
+            📋 Manage Tasks
+        </a>
+
+        <a href="@Url.Action("Index", "Team")" class="quick-btn">
+            👥 Manage Teams
+        </a>
+
+        <a href="@Url.Action("UserManagement", "User")" class="quick-btn">
+            👤 Manage Users
+        </a>
+
+        <a href="@Url.Action("Notification", "Notification")" class="quick-btn">
+            🔔 Notifications
+        </a>
+
+    </div>
+
+</div>
+

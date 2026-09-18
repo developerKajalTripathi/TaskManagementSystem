@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@model IEnumerable<TaskManagementSystem.Models.Team>
+
+@{
+    ViewBag.Title = "Team Management";
+}
+
+<style>
+
+    .team-wrapper {
+        padding: 30px 0;
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 5px;
+    }
+
+    .page-subtitle {
+        color: #718096;
+        margin-bottom: 25px;
+    }
+
+    .top-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .team-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+        .table thead th {
+            border-top: none;
+            background: #f7f9fc;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 14px;
+        }
+
+        .table tbody td {
+            padding: 14px;
+            vertical-align: middle;
+        }
+
+    .team-name {
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    .manager-name {
+        color: #718096;
+    }
+
+    .action-btn {
+        margin-right: 5px;
+        border-radius: 6px;
+    }
+
+    .empty-message {
+        text-align: center;
+        padding: 40px;
+        color: #718096;
+    }
+
+    @@media (max-width: 768px) {
+
+        .top-section {
+            display: block;
+        }
+
+        .add-btn {
+            margin-top: 15px;
+        }
+
+        .team-card {
+            overflow-x: auto;
+        }
+    }
+</style>
+
+
+<div class="container team-wrapper">
+
+    <div class="top-section">
+
+        <div>
+            <div class="page-title">
+                Team Management
+            </div>
+
+            <div class="page-subtitle">
+                Manage teams and assign managers
+            </div>
+        </div>
+
+        <a href="@Url.Action("CreateTeam", "Team")"
+           class="btn btn-primary add-btn">
+            + Add Team
+        </a>
+
+    </div>
+
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong>
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+
+    <div class="team-card">
+
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>Team Name</th>
+                        <th>Manager ID</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.Id
+                            </td>
+
+                            <td class="team-name">
+                                @item.Name
+                            </td>
+
+                            <td class="manager-name">
+                                @item.ManagerId
+                            </td>
+
+                            <td>
+                                @item.CreatedAt.ToString("dd-MM-yyyy")
+                            </td>
+
+                            <td>
+
+                                <a href="@Url.Action("Edit", "Team", new { id = item.Id })"
+                                   class="btn btn-info btn-sm action-btn">
+                                    Edit
+                                </a>
+
+                                <a href="@Url.Action("Delete", "Team", new { id = item.Id })"
+                                   class="btn btn-danger btn-sm action-btn"
+                                   onclick="return confirm('Are you sure you want to delete this team?');">
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+        else
+        {
+            <div class="empty-message">
+
+                <h4>No Teams Found</h4>
+
+                <p>
+                    Click on Add Team to create your first team.
+                </p>
+
+            </div>
+        }
+
+    </div>
+
+</div>
